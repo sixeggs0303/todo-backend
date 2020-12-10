@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -51,5 +52,14 @@ public class TodoServiceTests {
 
         //then
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void should_throw_todo_not_found_exception_when_get_todo_given_wrong_id() {
+        //when
+        final TodoNotFoundException todoNotFoundException = assertThrows(TodoNotFoundException.class, () -> todoService.getTodo(""));
+
+        //then
+        assertEquals("Todo not found", todoNotFoundException.getMessage());
     }
 }

@@ -62,5 +62,17 @@ public class LabelServiceTest {
         assertEquals("Label not found", labelNotFoundException.getMessage());
     }
 
+    @Test
+    public void should_return_label_when_create_label_given_label() {
+        //given
+        final Label expected = new Label();
+        when(labelRepository.save(any())).thenReturn(expected);
+
+        //when
+        final Label actual = labelService.createLabel(expected);
+
+        //then
+        assertEquals(expected, actual);
+    }
 }
 

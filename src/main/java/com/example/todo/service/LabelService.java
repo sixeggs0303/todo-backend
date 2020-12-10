@@ -20,4 +20,8 @@ public class LabelService {
     public Label getLabel(String id) throws LabelNotFoundException {
         return labelRepository.findById(id).orElseThrow(LabelNotFoundException::new);
     }
+
+    public Label createLabel(Label label) {
+        return labelRepository.save(label);
+    }
 }

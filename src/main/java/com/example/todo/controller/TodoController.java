@@ -3,6 +3,7 @@ package com.example.todo.controller;
 
 import com.example.todo.dto.TodoRequest;
 import com.example.todo.dto.TodoResponse;
+import com.example.todo.exception.LabelNotFoundException;
 import com.example.todo.exception.TodoNotFoundException;
 import com.example.todo.mapper.TodoMapper;
 import com.example.todo.model.Todo;
@@ -41,7 +42,7 @@ public class TodoController {
     }
 
     @PutMapping("/{id}")
-    public TodoResponse updateTodo(@PathVariable String id, @RequestBody TodoRequest updatedTodoRequest) throws TodoNotFoundException {
+    public TodoResponse updateTodo(@PathVariable String id, @RequestBody TodoRequest updatedTodoRequest) throws TodoNotFoundException, LabelNotFoundException {
         Todo updatedTodo = todoMapper.toEntity(updatedTodoRequest);
         return todoMapper.toResponse(todoService.updateTodo(id, updatedTodo));
     }

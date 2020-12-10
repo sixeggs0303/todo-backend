@@ -1,5 +1,6 @@
 package com.example.todo.service;
 
+import com.example.todo.exception.LabelNotFoundException;
 import com.example.todo.exception.TodoNotFoundException;
 import com.example.todo.model.Todo;
 import com.example.todo.repository.TodoRepository;
@@ -25,6 +26,9 @@ public class TodoServiceTests {
 
     @Mock
     TodoRepository todoRepository;
+
+    @Mock
+    LabelService labelService;
 
     @Test
     public void should_return_all_todo_when_get_todos_given_todos() {
@@ -76,7 +80,7 @@ public class TodoServiceTests {
     }
 
     @Test
-    public void should_return_updated_todo_when_updated_todo_given_todo_and_todo_id() throws TodoNotFoundException {
+    public void should_return_updated_todo_when_updated_todo_given_todo_and_todo_id() throws TodoNotFoundException, LabelNotFoundException {
         //given
         final Todo expected = new Todo();
         when(todoRepository.existsById(any())).thenReturn(true);
@@ -116,5 +120,21 @@ public class TodoServiceTests {
         final TodoNotFoundException todoNotFoundException = assertThrows(TodoNotFoundException.class, () -> todoService.deleteTodo(""));
         //then
         assertEquals("Todo not found", todoNotFoundException.getMessage());
+    }
+
+    @Test
+    public void should_throw_label_not_found_exception_when_update_todo_given_not_existing_label_id() {
+        //give
+        Todo todo = new Todo();
+        List<String> labelIds = new ArrayList<>();
+        labelIds.add("123");
+        todo.setLabelIds(labelIds);
+        when(todoRepository.existsById(any())).thenReturn(true);
+
+        //when
+        final LabelNotFoundException labelNotFoundException = assertThrows(LabelNotFoundException.class, () -> todoService.updateTodo(todo.getId(), todo));
+
+        //then
+        assertEquals("Label not found", labelNotFoundException.getMessage());
     }
 }

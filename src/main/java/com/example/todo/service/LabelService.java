@@ -31,4 +31,8 @@ public class LabelService {
         }
         labelRepository.deleteById(id);
     }
+
+    public boolean labelExist(String id) {
+        return labelRepository.existsById(id);
+    }
 }

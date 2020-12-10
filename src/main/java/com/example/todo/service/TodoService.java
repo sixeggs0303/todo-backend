@@ -24,7 +24,12 @@ public class TodoService {
         return todoRepository.findById(id).orElseThrow(TodoNotFoundException::new);
     }
 
-    public Todo createTodo(Todo todo) {
+    public Todo createTodo(Todo todo) throws LabelNotFoundException {
+
+        if (!todo.getLabelIds().stream().allMatch(labelService::labelExist)) {
+            throw new LabelNotFoundException();
+        }
+
         return todoRepository.save(todo);
     }
 

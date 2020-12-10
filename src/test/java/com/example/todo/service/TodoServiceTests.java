@@ -67,7 +67,7 @@ public class TodoServiceTests {
     }
 
     @Test
-    public void should_return_todo_when_create_todo_given_todo() {
+    public void should_return_todo_when_create_todo_given_todo() throws LabelNotFoundException {
         //given
         final Todo expected = new Todo();
         when(todoRepository.save(any())).thenReturn(expected);
@@ -133,6 +133,21 @@ public class TodoServiceTests {
 
         //when
         final LabelNotFoundException labelNotFoundException = assertThrows(LabelNotFoundException.class, () -> todoService.updateTodo(todo.getId(), todo));
+
+        //then
+        assertEquals("Label not found", labelNotFoundException.getMessage());
+    }
+
+    @Test
+    public void should_throw_label_not_found_exception_when_create_todo_given_not_existing_label_id() {
+        //give
+        Todo todo = new Todo();
+        List<String> labelIds = new ArrayList<>();
+        labelIds.add("123");
+        todo.setLabelIds(labelIds);
+
+        //when
+        final LabelNotFoundException labelNotFoundException = assertThrows(LabelNotFoundException.class, () -> todoService.createTodo(todo));
 
         //then
         assertEquals("Label not found", labelNotFoundException.getMessage());

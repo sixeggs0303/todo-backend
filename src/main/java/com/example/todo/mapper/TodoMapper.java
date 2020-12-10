@@ -25,7 +25,7 @@ public class TodoMapper {
         return todo;
     }
 
-    public TodoResponse toResponse(Todo todo) throws Exception {
+    public TodoResponse toResponse(Todo todo) {
         TodoResponse todoResponse = new TodoResponse();
 
         BeanUtils.copyProperties(todo, todoResponse);
@@ -33,7 +33,11 @@ public class TodoMapper {
         List<Label> labels = new ArrayList<>();
 
         for (String labelId : todo.getLabelIds()) {
-            labels.add(labelService.getLabel(labelId));
+            try {
+                labels.add(labelService.getLabel(labelId));
+            } catch (Exception e) {
+                // Skip not existing label
+            }
         }
 
         todoResponse.setLabels(labels);

@@ -30,19 +30,19 @@ public class TodoController {
     }
 
     @GetMapping("/{id}")
-    public TodoResponse getTodo(@PathVariable String id) throws TodoNotFoundException {
+    public TodoResponse getTodo(@PathVariable String id) throws Exception {
         return todoMapper.toResponse(todoService.getTodo(id));
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public TodoResponse createTodo(@RequestBody TodoRequest todoRequest) {
+    public TodoResponse createTodo(@RequestBody TodoRequest todoRequest) throws Exception {
         Todo todo = todoMapper.toEntity(todoRequest);
         return todoMapper.toResponse(todoService.createTodo(todo));
     }
 
     @PutMapping("/{id}")
-    public TodoResponse updateTodo(@PathVariable String id, @RequestBody TodoRequest updatedTodoRequest) throws TodoNotFoundException, LabelNotFoundException {
+    public TodoResponse updateTodo(@PathVariable String id, @RequestBody TodoRequest updatedTodoRequest) throws Exception {
         Todo updatedTodo = todoMapper.toEntity(updatedTodoRequest);
         return todoMapper.toResponse(todoService.updateTodo(id, updatedTodo));
     }

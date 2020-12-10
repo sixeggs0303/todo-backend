@@ -31,4 +31,11 @@ public class TodoService {
         }
         return todoRepository.save(updatedTodo);
     }
+
+    public void deleteTodo(String id) throws TodoNotFoundException {
+        if (!todoRepository.existsById(id)) {
+            throw new TodoNotFoundException();
+        }
+        todoRepository.deleteById(id);
+    }
 }

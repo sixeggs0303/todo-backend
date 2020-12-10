@@ -3,7 +3,6 @@ package com.example.todo.service;
 import com.example.todo.exception.TodoNotFoundException;
 import com.example.todo.model.Todo;
 import com.example.todo.repository.TodoRepository;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,7 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TodoServiceTests {
@@ -95,6 +94,26 @@ public class TodoServiceTests {
         //when
         final TodoNotFoundException todoNotFoundException = assertThrows(TodoNotFoundException.class, () -> todoService.updateTodo("", new Todo()));
 
+        //then
+        assertEquals("Todo not found", todoNotFoundException.getMessage());
+    }
+
+    @Test
+    public void should_invoke_repository_delete_when_delete_todo_given_todo_id() throws TodoNotFoundException {
+        //given
+        when(todoRepository.existsById(any())).thenReturn(true);
+
+        //when
+        todoService.deleteTodo("");
+
+        //then
+        verify(todoRepository, times(1)).deleteById("");
+    }
+
+    @Test
+    public void should_throw_todo_not_found_exception_when_delete_todo_given_wrong_id() {
+        //when
+        final TodoNotFoundException todoNotFoundException = assertThrows(TodoNotFoundException.class, () -> todoService.deleteTodo(""));
         //then
         assertEquals("Todo not found", todoNotFoundException.getMessage());
     }

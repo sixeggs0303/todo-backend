@@ -2,22 +2,23 @@ package com.example.todo.dto;
 
 import com.example.todo.model.Label;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TodoResponse {
     private String id;
     private String text;
     private boolean done;
-    private List<Label> labelIds;
+    private List<Label> labels = new ArrayList<>();
 
     public TodoResponse() {
     }
 
-    public TodoResponse(String id, String text, boolean done, List<Label> labelIds) {
+    public TodoResponse(String id, String text, boolean done, List<Label> labels) {
         this.id = id;
         this.text = text;
         this.done = done;
-        this.labelIds = labelIds;
+        this.labels = labels;
     }
 
     public String getId() {
@@ -44,11 +45,11 @@ public class TodoResponse {
         this.done = done;
     }
 
-    public List<Label> getLabelIds() {
-        return labelIds;
+    public List<Label> getLabels() {
+        return labels;
     }
 
-    public void setLabelIds(List<Label> labelIds) {
-        this.labelIds = labelIds;
+    public void setLabels(List<Label> labels) {
+        this.labels = labels;
     }
 }

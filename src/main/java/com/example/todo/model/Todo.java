@@ -1,17 +1,19 @@
 package com.example.todo.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document
 public class Todo {
-    @MongoId
+    @MongoId(FieldType.OBJECT_ID)
     private String id;
     private String text;
     private boolean done;
-    private List<String> labelIds;
+    private List<String> labelIds = new ArrayList<>();
 
     public Todo() {
     }

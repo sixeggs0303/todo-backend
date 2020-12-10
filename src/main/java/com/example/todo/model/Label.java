@@ -1,11 +1,12 @@
 package com.example.todo.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document
 public class Label {
-    @MongoId
+    @MongoId(FieldType.OBJECT_ID)
     private String id;
     private String content;
     private String color;

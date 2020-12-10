@@ -1,10 +1,11 @@
 package com.example.todo.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TodoRequest {
     private String text;
-    private boolean done;
+    private boolean done = false;
     private List<String> labelIds;
 
     public TodoRequest() {

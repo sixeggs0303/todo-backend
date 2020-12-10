@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -50,6 +51,15 @@ public class LabelServiceTest {
 
         //then
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void should_throw_label_not_found_exception_when_get_label_given_wrong_id() {
+        //when
+        final LabelNotFoundException labelNotFoundException = assertThrows(LabelNotFoundException.class, () -> labelService.getLabel(""));
+
+        //then
+        assertEquals("Label not found", labelNotFoundException.getMessage());
     }
 
 }

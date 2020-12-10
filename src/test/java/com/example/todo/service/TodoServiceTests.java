@@ -62,4 +62,17 @@ public class TodoServiceTests {
         //then
         assertEquals("Todo not found", todoNotFoundException.getMessage());
     }
+
+    @Test
+    public void should_return_todo_when_create_todo_given_todo() {
+        //given
+        final Todo expected = new Todo();
+        when(todoRepository.save(any())).thenReturn(expected);
+
+        //when
+        final Todo actual = todoService.createTodo(expected);
+
+        //then
+        assertEquals(expected, actual);
+    }
 }

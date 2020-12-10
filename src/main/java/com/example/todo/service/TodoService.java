@@ -16,4 +16,8 @@ public class TodoService {
     public List<Todo> getTodos() {
         return todoRepository.findAll();
     }
+
+    public Todo getTodo(String id) throws TodoNotFoundException {
+        return todoRepository.findById(id).orElseThrow(TodoNotFoundException::new);
+    }
 }

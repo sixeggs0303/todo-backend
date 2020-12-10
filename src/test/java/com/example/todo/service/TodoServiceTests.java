@@ -75,4 +75,27 @@ public class TodoServiceTests {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void should_return_updated_todo_when_updated_todo_given_todo_and_todo_id() throws TodoNotFoundException {
+        //given
+        final Todo expected = new Todo();
+        when(todoRepository.existsById(any())).thenReturn(true);
+        when(todoRepository.save(any())).thenReturn(expected);
+
+        //when
+        final Todo actual = todoService.updateTodo(expected.getId(), expected);
+
+        //then
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void should_throw_todo_not_found_exception_when_update_todo_given_wrong_id() {
+        //when
+        final TodoNotFoundException todoNotFoundException = assertThrows(TodoNotFoundException.class, () -> todoService.updateTodo("", new Todo()));
+
+        //then
+        assertEquals("Todo not found", todoNotFoundException.getMessage());
+    }
 }

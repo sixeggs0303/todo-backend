@@ -52,4 +52,13 @@ public class TodoService {
         }
         todoRepository.deleteById(id);
     }
+
+    public void removeLabelIdFromTodos(String labelId) {
+        for (Todo todo : todoRepository.findByLabelIds(labelId)) {
+            List<String> labelIds = todo.getLabelIds();
+            labelIds.remove(labelId);
+            todo.setLabelIds(labelIds);
+            todoRepository.save(todo);
+        }
+    }
 }

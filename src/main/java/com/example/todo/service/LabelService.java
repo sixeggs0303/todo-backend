@@ -12,6 +12,8 @@ import java.util.List;
 public class LabelService {
     @Autowired
     private LabelRepository labelRepository;
+    @Autowired
+    private TodoService todoService;
 
     public List<Label> getLabels() {
         return labelRepository.findAll();
@@ -30,6 +32,8 @@ public class LabelService {
             throw new LabelNotFoundException();
         }
         labelRepository.deleteById(id);
+
+        todoService.removeLabelIdFromTodos(id);
     }
 
     public boolean labelExist(String id) {

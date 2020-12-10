@@ -74,5 +74,25 @@ public class LabelServiceTest {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void should_invoke_repository_delete_when_delete_label_given_label_id() throws LabelNotFoundException {
+        //given
+        when(labelRepository.existsById(any())).thenReturn(true);
+
+        //when
+        labelService.deleteLabel("");
+
+        //then
+        verify(labelRepository, times(1)).deleteById("");
+    }
+
+    @Test
+    public void should_throw_label_not_found_exception_when_delete_label_given_wrong_id() {
+        //when
+        final LabelNotFoundException labelNotFoundException = assertThrows(LabelNotFoundException.class, () -> labelService.deleteLabel(""));
+        //then
+        assertEquals("Label not found", labelNotFoundException.getMessage());
+    }
 }
 

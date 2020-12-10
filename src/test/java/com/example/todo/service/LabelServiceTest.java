@@ -1,5 +1,6 @@
 package com.example.todo.service;
 
+import com.example.todo.exception.LabelNotFoundException;
 import com.example.todo.model.Label;
 import com.example.todo.repository.LabelRepository;
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,5 +38,19 @@ public class LabelServiceTest {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void should_return_a_label_when_get_label_given_id() throws LabelNotFoundException {
+        //given
+        final Label expected = new Label();
+        when(labelRepository.findById(any())).thenReturn(Optional.of(expected));
+
+        //when
+        final Label actual = labelService.getLabel("");
+
+        //then
+        assertEquals(expected, actual);
+    }
+
 }
 
